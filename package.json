@@ -1,0 +1,28 @@
+{
+  "name": "lightning-adjacency",
+  "version": "0.0.0",
+  "dependencies": {
+    "color": "^0.10.1",
+    "colorbrewer": "0.0.2",
+    "d3": "^3.5.5",
+    "leaflet": "^0.7.3",
+    "lightning-client-utils": "^0.6.3",
+    "lightning-visualization": "^0.0.4",
+    "lodash": "^3.10.0"
+  },
+  "keywords": [
+    "lightning-visualization"
+  ],
+  "devDependencies": {
+    "brfs": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
+  },
+  "lightning": {}
+}
