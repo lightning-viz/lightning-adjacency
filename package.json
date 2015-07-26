@@ -2,6 +2,7 @@
   "name": "lightning-adjacency",
   "version": "0.0.1",
   "dependencies": {
+    "brfs": "^1.4.0",
     "color": "^0.10.1",
     "colorbrewer": "0.0.2",
     "d3": "^3.5.5",
@@ -13,9 +14,6 @@
   "keywords": [
     "lightning-visualization"
   ],
-  "devDependencies": {
-    "brfs": "^1.4.0"
-  },
   "engines": {
     "node": ">=0.8.0"
   },
