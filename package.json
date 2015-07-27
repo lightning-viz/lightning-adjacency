@@ -1,6 +1,6 @@
 {
   "name": "lightning-adjacency",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "brfs": "^1.4.0",
     "color": "^0.10.1",
@@ -16,6 +16,10 @@
   ],
   "engines": {
     "node": ">=0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightning-viz/lightning-adjacency.git"
   },
   "browserify": {
     "transform": [
