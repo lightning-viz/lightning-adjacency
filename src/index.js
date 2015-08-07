@@ -1,57 +1,18 @@
 'use strict';
-
 var LightningVisualization = require('lightning-visualization');
-var fs = require('fs');
-var styles = fs.readFileSync(__dirname + '/styles/style.css');
 var d3 = require('d3');
 var utils = require('lightning-client-utils');
 var _ = require('lodash');
 var Color = require('color');
-var L = require('leaflet');
 var colorbrewer = require('colorbrewer')
-
 
 /*
  * Extend the base visualization object
  */
 var Visualization = LightningVisualization.extend({
 
-    styles: styles, 
-
     init: function() {
         this.render();  
-    },
-
-    formatData: function(data) {
-        var matrix = [];
-        var n = data.nodes.length
-        var label = data.label ? data.label : _.times(n, _.constant(0));
-        var min = d3.min(label);
-        label = label.map(function(d) {return d - min});
-        var color = utils.getColors(_.uniq(label).length);
-
-        data.nodes.forEach(function(node, i) {
-            matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0, c: "black"}; });
-        });
-        data.links.forEach(function(link) {
-            matrix[link[0]][link[1]].z = link[2];
-            if (label[link[0]] == label[link[1]]) {
-                matrix[link[0]][link[1]].c = color[label[link[0]]];
-            }
-        });
-        var zMin = d3.min(data.links, function(d) {return d[2]})
-        console.log(zMin)
-        d3.range(n).forEach(function(i) { 
-            matrix[i][i].z = zMin
-            matrix[i][i].c = color[label[i]]
-        })
-
-        var entries = _.flatten(matrix)
-
-        var nrow = matrix.length
-        var ncol = matrix[0].length
-
-        return {entries: entries, nrow: nrow, ncol: ncol, label: label}
     },
 
     render: function() {
@@ -118,7 +79,7 @@ var Visualization = LightningVisualization.extend({
                 .data(data);
 
             dataBinding
-                .attr("fillStyle", function(d) {return d.z > 0 ? buildRGBA(d.c, z(d.z)) : "#eee"});
+                .attr("fillStyle", function(d) {return d.z > 0 ? utils.buildRGBA(d.c, z(d.z)) : "#eee"});
               
             dataBinding.enter()
                 .append("custom")
@@ -127,20 +88,13 @@ var Visualization = LightningVisualization.extend({
                 .attr("y", function(d, i) {return y(d.y)})
                 .attr("width", y.rangeBand())
                 .attr("height", x.rangeBand())
-                .attr("fillStyle", function(d) {return (d.z > 0) ? buildRGBA(d.c, z(d.z)) : "#eee"})
+                .attr("fillStyle", function(d) {return (d.z > 0) ? utils.buildRGBA(d.c, z(d.z)) : "#eee"})
                 .attr("strokeStyle", "white")
                 .attr("lineWidth", strokeWidth)
       
             drawCanvas();
         
         }
-
-        // function for handling opacity
-        var buildRGBA = function(fill, opacity) {
-            var color = Color(fill);
-            color.alpha(opacity);
-            return color.rgbString();
-        };
 
         // draw the matrix
         function drawCanvas() {
@@ -191,6 +145,38 @@ var Visualization = LightningVisualization.extend({
 
         drawCustom(entries)
     },
+
+    formatData: function(data) {
+        var matrix = [];
+        var n = data.nodes.length
+        var label = data.label ? data.label : _.times(n, _.constant(0));
+        var min = d3.min(label);
+        label = label.map(function(d) {return d - min});
+        var color = utils.getColors(_.uniq(label).length);
+
+        data.nodes.forEach(function(node, i) {
+            matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0, c: "black"}; });
+        });
+        data.links.forEach(function(link) {
+            matrix[link[0]][link[1]].z = link[2];
+            if (label[link[0]] == label[link[1]]) {
+                matrix[link[0]][link[1]].c = color[label[link[0]]];
+            }
+        });
+        var zMin = d3.min(data.links, function(d) {return d[2]})
+        console.log(zMin)
+        d3.range(n).forEach(function(i) { 
+            matrix[i][i].z = zMin
+            matrix[i][i].c = color[label[i]]
+        })
+
+        var entries = _.flatten(matrix)
+
+        var nrow = matrix.length
+        var ncol = matrix[0].length
+
+        return {entries: entries, nrow: nrow, ncol: ncol, label: label}
+    }
 
 });
 
