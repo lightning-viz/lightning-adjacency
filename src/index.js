@@ -8,7 +8,7 @@ var Visualization = Matrix.extend({
 
     getDefaultOptions: function() {
         return {
-            numbers: true,
+            numbers: false,
             symmetric: true,
             sort: "group"
         }
