@@ -8,9 +8,9 @@ var Visualization = Matrix.extend({
 
     getDefaultOptions: function() {
         return {
-            labels: false,
+            numbers: true,
             symmetric: true,
-            sort: "label"
+            sort: "group"
         }
     },
 
@@ -18,19 +18,19 @@ var Visualization = Matrix.extend({
         var matrix = [];
         var self = this;
 
-        // parse labels
+        // parse groups
         var n = data.nodes.length;
-        var label = data.label ? data.label : _.times(n, _.constant(0));
-        label = label.map(function(d) {return d - d3.min(label)});
-
+        var group = data.group ? data.group : _.times(n, _.constant(0));
+        group = group.map(function(d) {return d - d3.min(group)});
+ 
         // fill matrix with node and link info
         data.nodes.forEach(function(node, i) {
             matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0, c: "black"}; });
         });
         data.links.forEach(function(link) {
             matrix[link[0]][link[1]].z = link[2];
-            if (label[link[0]] == label[link[1]]) {
-                matrix[link[0]][link[1]].l = label[link[0]];
+            if (group[link[0]] == group[link[1]]) {
+                matrix[link[0]][link[1]].l = group[link[0]];
             } else {
                 matrix[link[0]][link[1]].l = -1;
             }
@@ -40,8 +40,8 @@ var Visualization = Matrix.extend({
         if (self.options.symmetric) {
             data.links.forEach(function(link) {
                 matrix[link[1]][link[0]].z = link[2];
-                if (label[link[0]] == label[link[1]]) {
-                    matrix[link[1]][link[0]].l = label[link[0]];
+                if (group[link[0]] == group[link[1]]) {
+                    matrix[link[1]][link[0]].l = group[link[0]];
                 } else {
                     matrix[link[1]][link[0]].l = -1;
                 }
@@ -51,7 +51,7 @@ var Visualization = Matrix.extend({
         // fill in diagnonals
         d3.range(n).forEach(function(i) {
             matrix[i][i].z = zmin;
-            matrix[i][i].l = label[i];
+            matrix[i][i].l = group[i];
         });
         var entries = _.flatten(matrix);
 
@@ -68,14 +68,14 @@ var Visualization = Matrix.extend({
         });
 
         return {entries: entries, nrow: nrow, ncol: ncol, rowsum: rowsum, colsum: colsum,
-            zmin: zmin, zmax: zmax, label: label, rows: data.names, columns: data.names}
+            zmin: zmin, zmax: zmax, group: group, rowLabels: data.labels, columnLabels: data.labels}
     },
 
     sortRows: function() {
         var self = this;
-        if (this.options.sort == 'label') {
+        if (this.options.sort == 'group') {
             var sorter = function(a, b) {
-                return self.data.label[b] - self.data.label[a]
+                return self.data.group[b] - self.data.group[a]
             };
             this.y.domain(d3.range(this.data.nrow).sort(sorter));
             this.x.domain(d3.range(this.data.ncol).sort(sorter));
@@ -94,7 +94,7 @@ var Visualization = Matrix.extend({
 
     makeScales: function() {
         var self = this;
-        var n = _.uniq(this.data.label).length;
+        var n = _.uniq(this.data.group).length;
         var color = utils.getColors(n);
         this.c = d3.scale.ordinal();
         this.c.domain([0, n])
