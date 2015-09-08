@@ -97,7 +97,7 @@ var Visualization = Matrix.extend({
         var n = _.uniq(this.data.group).length;
         var color = utils.getColors(n);
         this.c = d3.scale.ordinal();
-        this.c.domain([0, n-1])
+        this.c.domain(d3.range(n))
             .range(color);
         this.z = d3.scale.linear();
         this.z.domain(utils.linspace(self.data.zmin, self.data.zmax, 9))
