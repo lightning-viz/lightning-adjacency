@@ -1,6 +1,6 @@
 {
   "name": "lightning-adjacency",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "dependencies": {
     "brfs": "^1.4.0",
     "color": "^0.10.1",
