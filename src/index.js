@@ -22,7 +22,7 @@ var Visualization = Matrix.extend({
         var n = data.nodes.length;
         var group = data.group ? data.group : _.times(n, _.constant(0));
         group = group.map(function(d) {return d - d3.min(group)});
- 
+
         // fill matrix with node and link info
         data.nodes.forEach(function(node, i) {
             matrix[i] = d3.range(n).map(function(j) { return {x: j, y: i, z: 0, c: "black"}; });
@@ -97,7 +97,7 @@ var Visualization = Matrix.extend({
         var n = _.uniq(this.data.group).length;
         var color = utils.getColors(n);
         this.c = d3.scale.ordinal();
-        this.c.domain([0, n])
+        this.c.domain([0, n-1])
             .range(color);
         this.z = d3.scale.linear();
         this.z.domain(utils.linspace(self.data.zmin, self.data.zmax, 9))
