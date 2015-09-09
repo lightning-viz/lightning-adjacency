@@ -7,6 +7,7 @@
     "colorbrewer": "0.0.2",
     "d3": "^3.5.5",
     "lightning-client-utils": "^0.7.0",
+    "lightning-matrix": "0.0.13",
     "lightning-visualization": "^0.1.0",
     "lodash": "^3.10.0"
   },
