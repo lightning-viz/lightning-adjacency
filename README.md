@@ -93,7 +93,7 @@ var options = {
   height: 400
 };
 
-var adjacency = new Adjacency(el, data, null, options);
+var adjacency = new Adjacency(el, data, options);
 ```
 
 ### API
@@ -109,7 +109,6 @@ var adjacency = new Adjacency(el, data, null, options);
   - **group** – array representing groups
   - **links** – array of arrays describing the links between nodes
   - **labels** – array of strings
-- **images** – not used in this visualization type
 - **options**
   - **width** – *Number* – the width of the visualization
   - **height** – *Number* – the height of the visualization
