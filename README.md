@@ -100,7 +100,7 @@ var adjacency = new Adjacency(el, data, options);
 
 #### `var Adjacency = require('lightning-adjacency');`
 
-#### `var adjacency = new Adjacency(selector, data, images, options);`
+#### `var adjacency = new Adjacency(selector, data, options);`
 
 **Arguments:**  
 - **selector** – css selector or dom node that will act as parent node of the visualization
