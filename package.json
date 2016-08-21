@@ -1,6 +1,9 @@
 {
   "name": "lightning-adjacency",
   "version": "0.0.13",
+  "scripts": {
+    "start": " budo data/example.js"
+  },
   "dependencies": {
     "brfs": "^1.4.0",
     "color": "^0.10.1",
@@ -27,5 +30,9 @@
   },
   "lightning": {
     "name": "adjacency"
+  },
+  "devDependencies": {
+    "brfs": "^1.4.3",
+    "budo": "^8.3.0"
   }
 }
