@@ -1,4 +1,4 @@
-var Adjacency = require('../index');
+var Adjacency = require('lightning-adjacency');
 
 var el = document.createElement('div');
 document.body.appendChild(el);
@@ -18,4 +18,4 @@ var options = {
   height: 400
 };
 
-var adjacency = new Adjacency(el, data, null, options);
+var adjacency = new Adjacency(el, data, options);
